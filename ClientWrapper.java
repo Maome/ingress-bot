@@ -16,6 +16,7 @@ public class ClientWrapper{
     private ArrayList<EnergyGlob> localEdibleGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<S2CellId> localCellIds = new ArrayList<S2CellId>();
     private ArrayList<Portal> localPortals = new ArrayList<Portal>();
+    private ArrayList<Portal> localHackablePortals = new ArrayList<Portal>();
     private S2LatLng currentLocation = new S2LatLng();
     //Array list for portals?
     
@@ -186,8 +187,15 @@ public class ClientWrapper{
     //////////////////////////////////////////////////////////////////////////////////////////////////
     private void getEdibleGlobs(){
         for(int i = 0; i < localEnergyGlobs.size(); i++){
-            if( S2Wrapper.GreatEarthDistance(localEnergyGlobs.get(i).s2ll, currentLocation) < 10.0 )
+            if( S2Wrapper.GreatEarthDistance(localEnergyGlobs.get(i).s2ll, currentLocation) < 30.0 )
                 localEdibleGlobs.add(localEnergyGlobs.get(i));
+        }
+    }
+    
+    private void getHackablePortals(){
+        for(int i = 0; i < localPortals.size(); i++){
+            if( S2Wrapper.GreatEarthDistance(localPortals.get(i).location, currentLocation) < 30.0 )
+                localHackablePortals.add(localPortals.get(i));
         }
     }
     
@@ -219,7 +227,7 @@ public class ClientWrapper{
         String line = br.readLine();
         br.close();
         
-        //System.out.print("\n\n\n" + line + "\n\n\n");
+        System.out.print("\n\n\n" + line + "\n\n\n");
     }
     
     
@@ -243,12 +251,31 @@ public class ClientWrapper{
         
         getEdibleGlobs();        
         
+        localPortals.clear();
+        
         getObjectsInCells();
+        
+        getHackablePortals();
         
         //hackPortal("2bae48e8561f46a5824793341c65003f.11");
         //get objects in cells, then call again to eat?
             //check xm
             //if low then eat
+    }
+    
+    public void printLocalHackablePortalNames(){
+        for(int i = 0; i < localHackablePortals.size(); i++){
+            System.out.println(localHackablePortals.get(i).title + " : " + localHackablePortals.get(i).guid);
+        }
+    }
+    
+    public void hackSpecificPortal(String guid) throws Exception{
+        hackPortal(guid);
+    }
+    
+    public void hackLocalPortals() throws Exception{
+        for(int i = 0; i < localHackablePortals.size(); i++)
+            hackPortal(localHackablePortals.get(i).guid);
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////

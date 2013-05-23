@@ -22,17 +22,29 @@ public class Pygress{
         ClientWrapper clientWrapper = new ClientWrapper(authCookie);
         clientWrapper.handshake();
         
+        /*
+        S2LatLng lowellpark = S2LatLng.fromDegrees(48.7268, -122.4926);
+        S2LatLng fxcollege = S2LatLng.fromDegrees(48.7304, -122.4856);
+        
+        double dist = S2Wrapper.GreatEarthDistance(lowellpark, fxcollege);
+        System.out.println(dist);
+        */
+        
+                
         S2LatLng testll = S2LatLng.fromDegrees(48.73410, -122.48640);
+        //S2LatLng testll = S2LatLng.fromDegrees(48.73258,-122.48634);
         S2CellId testID = S2CellId.fromToken("5485a3cbd1100000");
         S2LatLng testll2 = testID.toLatLng();
         clientWrapper.newLocation(testll);
-        
+        clientWrapper.printLocalHackablePortalNames();
+        clientWrapper.hackLocalPortals();
         
         //Read file with path
         //Calculate times
         //Fuzz path (normal distrobution)
         //Run path
             //Hack portals along the way
+        
     }
 }
 
