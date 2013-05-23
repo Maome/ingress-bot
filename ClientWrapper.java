@@ -15,6 +15,7 @@ public class ClientWrapper{
     private ArrayList<EnergyGlob> localEnergyGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<EnergyGlob> localEdibleGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<S2CellId> localCellIds = new ArrayList<S2CellId>();
+    private ArrayList<Portal> localPortals = new ArrayList<Portal>();
     private S2LatLng currentLocation = new S2LatLng();
     //Array list for portals?
     
@@ -128,17 +129,35 @@ public class ClientWrapper{
         String line = br.readLine();
         br.close();
         
-        System.out.print("\n\n\n" + line + "\n\n\n");
+        //System.out.print("\n\n\n" + line + "\n\n\n");
         
         //Decode the (interesting parts of the) json response
         JSONParser jp = new JSONParser();
         JSONObject obj = (JSONObject) jp.parse(line);
         JSONObject gameBasket = (JSONObject) obj.get("gameBasket");
+        JSONArray gameEntities = (JSONArray) gameBasket.get("gameEntities"); //here we grab the portal entities array
         JSONArray responseEnergyGlobGuids = (JSONArray) (gameBasket.get("energyGlobGuids"));
 
         //Update our localEnergyGlobs array list
         for(int i = 0; i < responseEnergyGlobGuids.size(); i++)
             localEnergyGlobs.add(new EnergyGlob(responseEnergyGlobGuids.get(i).toString()));
+        
+        //System.out.println(gameEntities);    
+        //Update our localPortals array list
+        for(int i = 0; i < gameEntities.size(); i++){
+            JSONArray entity = (JSONArray) gameEntities.get(i);
+            String pguid = entity.get(0).toString();
+            JSONObject info = (JSONObject) entity.get(2);
+            JSONObject portalV2 = (JSONObject) info.get("portalV2"); 
+            if(portalV2 != null){ //then we are a portal, yay!
+                String title = (   ((JSONObject) portalV2.get("descriptiveText")).get("TITLE").toString()    );
+                JSONObject locE6 = (JSONObject) info.get("locationE6");
+                long latE6 = (long) locE6.get("latE6");
+                long lngE6 = (long) locE6.get("lngE6");
+                S2LatLng portalS2 = S2LatLng.fromE6(latE6, lngE6);
+                localPortals.add(new Portal(pguid, title, portalS2));
+            }
+        }
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +219,7 @@ public class ClientWrapper{
         String line = br.readLine();
         br.close();
         
-        System.out.print("\n\n\n" + line + "\n\n\n");
+        //System.out.print("\n\n\n" + line + "\n\n\n");
     }
     
     
