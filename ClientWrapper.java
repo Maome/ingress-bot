@@ -13,6 +13,7 @@ import java.util.LinkedList;
 
 public class ClientWrapper{
     private ArrayList<EnergyGlob> localEnergyGlobs = new ArrayList<EnergyGlob>();
+    private ArrayList<EnergyGlob> localEdibleGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<S2CellId> localCellIds = new ArrayList<S2CellId>();
     private S2LatLng currentLocation = new S2LatLng();
     //Array list for portals?
@@ -95,6 +96,8 @@ public class ClientWrapper{
         }
         
         //Setup edible globs here
+        for(int i = 0; i < this.localEdibleGlobs.size();i++)
+            energyGlobGuids.add(localEdibleGlobs.get(i).name);
             //TODO!
         
         //Setup the json message structure
@@ -124,6 +127,8 @@ public class ClientWrapper{
         BufferedReader br = new BufferedReader(new InputStreamReader(getObjectsCon.getInputStream()));
         String line = br.readLine();
         br.close();
+        
+        System.out.print("\n\n\n" + line + "\n\n\n");
         
         //Decode the (interesting parts of the) json response
         JSONParser jp = new JSONParser();
@@ -156,6 +161,50 @@ public class ClientWrapper{
     }   
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    // getEdibleGlobs()
+    // Updates the edible globs array list to include globs within 10 meters of currentLocation
+    // Side Effects : localEdibleGlobs
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    private void getEdibleGlobs(){
+        for(int i = 0; i < localEnergyGlobs.size(); i++){
+            if( S2Wrapper.GreatEarthDistance(localEnergyGlobs.get(i).s2ll, currentLocation) < 10.0 )
+                localEdibleGlobs.add(localEnergyGlobs.get(i));
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void hackPortal(String portalGUID) throws Exception{
+        //setup json request
+        JSONObject main = new JSONObject();
+        JSONObject params = new JSONObject();
+        
+        params.put("itemGuid", portalGUID);
+        params.put("knobSyncTimeStamp", syncTimestamp);
+        params.put("playerLocation", S2Wrapper.encodeLocation(currentLocation));
+        main.put("params", params);
+        
+        //Setup the json connection
+        URL getObjectsURL = new URL(baseURL + "/rpc/gameplay/collectItemsFromPortal");
+        URLConnection getObjectsCon = getObjectsURL.openConnection();
+        getObjectsCon.setRequestProperty("Cookie", authCookie);
+        getObjectsCon.setRequestProperty("X-XsrfToken", this.xsrfToken);
+        getObjectsCon.setDoOutput(true);
+        
+        //Setup and use the writer
+        OutputStreamWriter out = new OutputStreamWriter(getObjectsCon.getOutputStream());
+        out.write(main.toString());  //Write our json object to the connection
+        out.close();
+        
+        //Setup and use the reader
+        BufferedReader br = new BufferedReader(new InputStreamReader(getObjectsCon.getInputStream()));
+        String line = br.readLine();
+        br.close();
+        
+        System.out.print("\n\n\n" + line + "\n\n\n");
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     // newLocation(S2LatLng)
     // Updates the ClientWrapper object with a new location. Old location reliant information is
     // cleared and new cells and object requests are called
@@ -168,8 +217,16 @@ public class ClientWrapper{
         
         //call anything that changes on new location
         currentLocation = newLocation;
-        getObjectsInCells();        
         
+        getSurroundingCells();
+        
+        getObjectsInCells();
+        
+        getEdibleGlobs();        
+        
+        getObjectsInCells();
+        
+        //hackPortal("2bae48e8561f46a5824793341c65003f.11");
         //get objects in cells, then call again to eat?
             //check xm
             //if low then eat
@@ -181,9 +238,11 @@ public class ClientWrapper{
     // Side Effects : localCellIds, localEnergyGlobs
     //////////////////////////////////////////////////////////////////////////////////////////////////    
     private void clearLocalData(){
+        localEdibleGlobs.clear();
         localEnergyGlobs.clear();
         localCellIds.clear();
     }
     
+    //TODO: Get energy and maintain state
 
 }

@@ -22,6 +22,11 @@ public class Pygress{
         ClientWrapper clientWrapper = new ClientWrapper(authCookie);
         clientWrapper.handshake();
         
+        S2LatLng testll = S2LatLng.fromDegrees(48.73410, -122.48640);
+        S2CellId testID = S2CellId.fromToken("5485a3cbd1100000");
+        S2LatLng testll2 = testID.toLatLng();
+        clientWrapper.newLocation(testll);
+        
         
         //Read file with path
         //Calculate times
