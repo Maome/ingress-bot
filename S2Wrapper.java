@@ -6,8 +6,10 @@ public class S2Wrapper{
     private final static double EARTH_RADIUS = 6371000;
     
     public static double GreatEarthDistance(S2LatLng a, S2LatLng b){
-        double angle = Haversin(a.latDegrees() - b.latDegrees()) + Math.cos(a.latDegrees()) * Math.cos(b.latDegrees()) * Haversin(a.latDegrees() - b.latDegrees()); 
-        return angle * EARTH_RADIUS;
+        //double angle = Haversin(a.latDegrees() - b.latDegrees()) + Math.cos(a.latDegrees()) * Math.cos(b.latDegrees()) * Haversin(a.lngDegrees() - b.lngDegrees()); 
+        double angle = Haversin(a.latRadians() - b.latRadians()) + Math.cos(a.latRadians()) * Math.cos(b.latRadians()) * Haversin(a.lngRadians() - b.lngRadians()); 
+        double ret = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(angle));
+        return ret;
     }
     
     public static double Haversin(double a){
