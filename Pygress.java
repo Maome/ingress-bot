@@ -16,9 +16,19 @@ public class Pygress{
         BufferedReader br = new BufferedReader(authCookieInputStream);
         authCookie = br.readLine();
         br.close();
+        
+        ClientWrapper clientWrapper = new ClientWrapper(authCookie);
+        clientWrapper.handshake();
+        
+        FileReader locationsFile = new FileReader("locations");
+        LocationRunner locRunner = new LocationRunner(locationsFile, clientWrapper);
+        
+        //locRunner.run();
+ 
+        clientWrapper.getInventory();
  
         System.out.println("\n\n\nSelf test complete!\n\n");
-        
+        /*
         ClientWrapper clientWrapper = new ClientWrapper(authCookie);
         clientWrapper.handshake();
         
@@ -30,7 +40,7 @@ public class Pygress{
         System.out.println(dist);
         */
         
-                
+          /*      
         S2LatLng testll = S2LatLng.fromDegrees(48.73410, -122.48640);
         //S2LatLng testll = S2LatLng.fromDegrees(48.73258,-122.48634);
         S2CellId testID = S2CellId.fromToken("5485a3cbd1100000");
@@ -44,7 +54,7 @@ public class Pygress{
         //Fuzz path (normal distrobution)
         //Run path
             //Hack portals along the way
-        
+        */
     }
 }
 

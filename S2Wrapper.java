@@ -32,4 +32,9 @@ public class S2Wrapper{
         String ret = String.format("%08x,%08x", Integer.valueOf(lat), Integer.valueOf(lng));
         return ret;
     }
+    
+    public static String getLocationString(S2LatLng s2ll){
+        String ret = "" + Double.toString(s2ll.latDegrees()) + "," + Double.toString(s2ll.lngDegrees());
+        return ret;
+    }
 }

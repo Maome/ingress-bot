@@ -11,6 +11,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import java.lang.*;
+
 public class ClientWrapper{
     private ArrayList<EnergyGlob> localEnergyGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<EnergyGlob> localEdibleGlobs = new ArrayList<EnergyGlob>();
@@ -230,6 +232,34 @@ public class ClientWrapper{
         System.out.print("\n\n\n" + line + "\n\n\n");
     }
     
+    @SuppressWarnings("unchecked")
+    public void getInventory() throws Exception{
+        JSONObject main = new JSONObject();
+        JSONObject params = new JSONObject();
+        params.put("lastQueryTimestamp", 0);
+        main.put("params",params);
+        
+        //Setup the json connection
+        URL getObjectsURL = new URL(baseURL + "/rpc/playerUndecorated/getInventory");
+        URLConnection getObjectsCon = getObjectsURL.openConnection();
+        getObjectsCon.setRequestProperty("Cookie", authCookie);
+        getObjectsCon.setRequestProperty("X-XsrfToken", this.xsrfToken);
+        getObjectsCon.setDoOutput(true);
+        
+        //Setup and use the writer
+        OutputStreamWriter out = new OutputStreamWriter(getObjectsCon.getOutputStream());
+        out.write(main.toString());  //Write our json object to the connection
+        out.close();
+        
+        //Setup and use the reader
+        BufferedReader br = new BufferedReader(new InputStreamReader(getObjectsCon.getInputStream()));
+        String line = br.readLine();
+        br.close();
+        
+        System.out.print("\n\n\n" + line + "\n\n\n");
+        
+    }
+        
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // newLocation(S2LatLng)
@@ -252,6 +282,7 @@ public class ClientWrapper{
         getEdibleGlobs();        
         
         localPortals.clear();
+        localHackablePortals.clear();
         
         getObjectsInCells();
         
@@ -274,8 +305,10 @@ public class ClientWrapper{
     }
     
     public void hackLocalPortals() throws Exception{
-        for(int i = 0; i < localHackablePortals.size(); i++)
+        for(int i = 0; i < localHackablePortals.size(); i++){
             hackPortal(localHackablePortals.get(i).guid);
+            Thread.sleep(1000);    
+        }
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////
