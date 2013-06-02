@@ -23,9 +23,9 @@ public class Pygress{
         FileReader locationsFile = new FileReader("locations");
         LocationRunner locRunner = new LocationRunner(locationsFile, clientWrapper);
         
-        //locRunner.run();
+        locRunner.run();
  
-        clientWrapper.getInventory();
+        //clientWrapper.getInventory();
  
         System.out.println("\n\n\nSelf test complete!\n\n");
         /*

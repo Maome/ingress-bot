@@ -29,8 +29,7 @@ public class ClientWrapper{
     
     //Final connection strings for initializing a connection
     public final String baseURL = "https://m-dot-betaspike.appspot.com";
-    public final String nemesisDeviceID = "json=%7B%22nemesisSoftwareVersion%22%3A%222013-05-03T19%3A32%3A11Z+929c2cce62eb+opt%22%2C%22deviceSoftwareVersion%22%3A%222.3.3%22%7D";
-    
+    public final String nemesisDeviceID = "json=%7B%22nemesisSoftwareVersion%22%3A%222013-05-22T19%3A12%3A58Z+7a2d8c1d88b1+opt%22%2C%22deviceSoftwareVersion%22%3A%222.3.3%22%7D";
     public ClientWrapper(String authCookie){
         this.authCookie = authCookie;
     }
@@ -55,6 +54,8 @@ public class ClientWrapper{
         String response = br.readLine();
         response = response.substring(9); // This removes the while(1); from the begining of googles response
         br.close();
+        
+        System.out.println(response);
         
         //Setup the JSON reader
         JSONParser jp = new JSONParser();
