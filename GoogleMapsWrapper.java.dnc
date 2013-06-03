@@ -1,0 +1,27 @@
+public class GoogleMapsWrapper{
+
+    public static final String baseURL = "http://maps.google.com/maps/api/staticmap?";
+
+    //public GoogleMapsWrapper(){}
+    
+    public static String BuildStaticRequest(S2LatLng location, ArrayList<S2LatLng> portals);//, ArrayList<S2LatLng> waypoints){
+    
+    ArrayList<String> request = ArrayList<String>();
+    
+        for(int i = 0; i<portals.size() ; i++){
+            String newRequest = "marker=color:blue|labels:P|" + S2Wrapper.getLocationString(portals.get(i)) + "&";
+            request.add(newRequest);
+        }
+        
+        request.add("center=" + S2Wrapper.getLocationString(location) + "&");
+        request.add("marker=color:red|labels:U|" + S2Wrapper.getLocationString(location) + "&");
+        request.add("zoom=15&size=512x512&maptype=roadmap&sensor=true&");
+        
+        String returnRequest = baseURL;
+        
+        for(int i = 0; i<request.size(); i++)
+            returnRequest += request.get(i);
+            
+        return returnRequest;
+    }    
+    

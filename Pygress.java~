@@ -17,9 +17,7 @@ public class Pygress{
         authCookie = br.readLine();
         br.close();
         
-        Player player = new Player();
-        
-        ClientWrapper clientWrapper = new ClientWrapper(authCookie, player);
+        ClientWrapper clientWrapper = new ClientWrapper(authCookie);
         clientWrapper.handshake();
         
         FileReader locationsFile = new FileReader("locations");
