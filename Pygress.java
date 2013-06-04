@@ -21,7 +21,9 @@ public class Pygress{
         
         ClientWrapper clientWrapper = new ClientWrapper(authCookie, player);
         clientWrapper.handshake();
-        
+        clientWrapper.getInventory();
+
+
         FileReader locationsFile = new FileReader("locations");
         LocationRunner locRunner = new LocationRunner(locationsFile, clientWrapper);
         
