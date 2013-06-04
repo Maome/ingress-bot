@@ -133,16 +133,16 @@ public class GUI{
         System.out.println(add);
         jLabel.setIcon(new ImageIcon(new URL(add)));
         
-        //debugJTArea.setText(DebugHandler.debugLines);
+        debugJTArea.setText(DebugHandler.debugLines);
         
-        //debugVertical.setValue( debugVertical.getMaximum() );
-        /*
+        debugVertical.setValue( debugVertical.getMaximum() );
+        
         String inventorySTR = "";
         for(int i = 0; i < player.inventory.size();i++)
             inventorySTR += player.inventory.get(i).toString() + "\n";
             
         itemsJTArea.setText(inventorySTR);
-        */
+        
         frame.pack();
      }
 }

@@ -20,3 +20,5 @@ To Do:
 * Create clientwrapper functions to allow bursting, linking, and deploying of and on portals.
 * Scan local chat for words related to current bot state or actions and enter silent cooldown period.
 * Improve google maps implementation to not reach non-api rate limit.
+* Add item drop functionality
+* Add multi account functionality

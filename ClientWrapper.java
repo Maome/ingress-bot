@@ -275,8 +275,17 @@ public class ClientWrapper{
             JSONObject resource = (JSONObject) itemInfo.get("resourceWithLevels");
             if(resource != null){
                 String objectString = resource.get("resourceType").toString() + ":" + resource.get("level").toString();
-                player.inventory.add(new IngressItem(objectString));
-                System.out.println(objectString);
+                
+                boolean found = false;
+                for(int j = 0; j < player.inventory.size(); j++){
+                    if(player.inventory.get(j).name.equals(objectString)){
+                        found = true;
+                        player.inventory.get(j).quantity++;
+                    }
+                }
+                if(!found)
+                    player.inventory.add(new IngressItem(objectString));
+                //System.out.println(objectString);
             }
         } 
         
