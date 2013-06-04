@@ -16,6 +16,7 @@ survey and attempt to acquire items from the portal ('hack' it) this loop contin
 visited. 
 
 To Do:
+* Error handling of valid (but error notifying) return json strings (ie "error":"TOO_SOON_BIG"
 * Create loop allowing the bot to run autonomously indefinitely without reaching portal burnout.
 * Create clientwrapper functions to allow bursting, linking, and deploying of and on portals.
 * Scan local chat for words related to current bot state or actions and enter silent cooldown period.

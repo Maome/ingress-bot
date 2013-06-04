@@ -25,7 +25,7 @@ public class LocationRunner{
         
         while( (curLine = br.readLine()) != null ){
         
-            cw.getInventory();
+            
         
             System.out.println("Moving to location: " + curLine);
             DebugHandler.debugInfo("Moving to location: " + curLine);
@@ -57,7 +57,9 @@ public class LocationRunner{
             cw.newLocation(newLoc);
             
             cw.printLocalHackablePortalNames();
-            //cw.hackLocalPortals();
+            cw.hackLocalPortals();
+            
+            cw.getInventory();
        }
             
     }

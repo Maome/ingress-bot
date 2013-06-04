@@ -133,8 +133,12 @@ public class GUI{
         double lng = s2ll.lngDegrees();
         
         String add = "http://maps.google.com/maps/api/staticmap?zoom=18&size=512x512&maptype=roadmap&sensor=true&markers=color:blue|label:U|" + Double.toString(lat) + "," + Double.toString(lng) + "&center=" + Double.toString(lat) + "," + Double.toString(lng);
-        for(int i = 0; i<cw.localPortals.size();i++)
-            //add += "&markers=color:purple|label:P|" + Double.toString(cw.localHackablePortals.get(i).location.latDegrees()) + "," + Double.toString(cw.localHackablePortals.get(i).location.latDegrees());
+        if(cw.localPortals != null){
+            int cwSize = cw.localHackablePortals.size();
+            System.out.println(cw.localHackablePortals.size());
+            for(int i = 0; i<cwSize;i++)
+                add += "&markers=color:purple|label:P|" + Double.toString(cw.localHackablePortals.get(i).location.latDegrees()) + "," + Double.toString(cw.localHackablePortals.get(i).location.lngDegrees());
+        }
         System.out.println(add);
         jLabel.setIcon(new ImageIcon(new URL(add)));
         

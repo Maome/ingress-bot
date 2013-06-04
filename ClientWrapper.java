@@ -212,6 +212,8 @@ public class ClientWrapper{
         JSONObject main = new JSONObject();
         JSONObject params = new JSONObject();
         
+        DebugHandler.debugInfo("Acquiring items from portal " + portalGUID);
+        
         params.put("itemGuid", portalGUID);
         params.put("knobSyncTimeStamp", syncTimestamp);
         params.put("playerLocation", S2Wrapper.encodeLocation(currentLocation));
@@ -235,6 +237,8 @@ public class ClientWrapper{
         br.close();
         
         DebugHandler.debugln(line);
+        
+        DebugHandler.debugInfo("Acquire successful!");
     }
     
     @SuppressWarnings("unchecked")
