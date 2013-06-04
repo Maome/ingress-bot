@@ -12,11 +12,13 @@ import com.google.common.geometry.*;
 public class GUI{
 
     public Player player;
+    private ClientWrapper cw;
 
     public JTextArea debugJTArea;
     public JScrollBar debugVertical;
     
     public JTextArea itemsJTArea;
+    public JTextArea infoJTArea;
     
     public JLabel jLabel;
     public JFrame frame;
@@ -25,8 +27,9 @@ public class GUI{
     //    GUI gui = new GUI();
     //}
     
-    public GUI(Player player) throws Exception{
+    public GUI(Player player, ClientWrapper cw) throws Exception{
         this.player = player;
+        this.cw = cw;
         /*
         URLConnection con = new URL("http://maps.google.com/maps/api/staticmap?center=48.73400,-122.48640&zoom=15&size=512x512&maptype=roadmap&markers=color:blue|label:S|48.73400,-122.48640&sensor=true").openConnection();
         InputStream is = con.getInputStream();
@@ -91,7 +94,7 @@ public class GUI{
         
         topLeftMap.add(jLabel);
         
-        JTextArea infoJTArea = new JTextArea(15, 30);
+        infoJTArea = new JTextArea(15, 30);
         itemsJTArea = new JTextArea(15,30);
         JScrollPane itemScrollPane = new JScrollPane(itemsJTArea);
         topRightInfo.add(itemScrollPane, BorderLayout.CENTER);
@@ -130,10 +133,13 @@ public class GUI{
         double lng = s2ll.lngDegrees();
         
         String add = "http://maps.google.com/maps/api/staticmap?zoom=18&size=512x512&maptype=roadmap&sensor=true&markers=color:blue|label:U|" + Double.toString(lat) + "," + Double.toString(lng) + "&center=" + Double.toString(lat) + "," + Double.toString(lng);
+        for(int i = 0; i<cw.localPortals.size();i++)
+            //add += "&markers=color:purple|label:P|" + Double.toString(cw.localHackablePortals.get(i).location.latDegrees()) + "," + Double.toString(cw.localHackablePortals.get(i).location.latDegrees());
         System.out.println(add);
         jLabel.setIcon(new ImageIcon(new URL(add)));
         
         debugJTArea.setText(DebugHandler.debugLines);
+        infoJTArea.setText(DebugHandler.infoLines);
         
         debugVertical.setValue( debugVertical.getMaximum() );
         

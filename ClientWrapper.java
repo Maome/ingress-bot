@@ -17,8 +17,8 @@ public class ClientWrapper{
     private ArrayList<EnergyGlob> localEnergyGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<EnergyGlob> localEdibleGlobs = new ArrayList<EnergyGlob>();
     private ArrayList<S2CellId> localCellIds = new ArrayList<S2CellId>();
-    private ArrayList<Portal> localPortals = new ArrayList<Portal>();
-    private ArrayList<Portal> localHackablePortals = new ArrayList<Portal>();
+    public ArrayList<Portal> localPortals = new ArrayList<Portal>();
+    public ArrayList<Portal> localHackablePortals = new ArrayList<Portal>();
     private S2LatLng currentLocation = new S2LatLng();
     //Array list for portals?
     
@@ -334,7 +334,7 @@ public class ClientWrapper{
     
     public void printLocalHackablePortalNames(){
         for(int i = 0; i < localHackablePortals.size(); i++){
-            DebugHandler.debugln(localHackablePortals.get(i).title + " : " + localHackablePortals.get(i).guid);
+            DebugHandler.debugInfo(localHackablePortals.get(i).title + " : " + localHackablePortals.get(i).guid);
         }
     }
     

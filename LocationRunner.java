@@ -21,17 +21,17 @@ public class LocationRunner{
         cw.printLocalHackablePortalNames();
         //cw.hackLocalPortals();
         
-        GUI gui = new GUI(cw.player);
+        GUI gui = new GUI(cw.player, cw);
         
         while( (curLine = br.readLine()) != null ){
         
             cw.getInventory();
         
             System.out.println("Moving to location: " + curLine);
-            DebugHandler.debugln("Moving to location: " + curLine);
+            DebugHandler.debugInfo("Moving to location: " + curLine);
            
             System.out.println(curLine.toString());
-            DebugHandler.debugln(curLine.toString());
+            //DebugHandler.debugInfo(curLine.toString());
             
             
             String[] newLocation = curLine.split(",");
@@ -44,14 +44,14 @@ public class LocationRunner{
             int waitTimeSeconds = (int) (dist/5.0);
             
             System.out.println("Waiting " + waitTimeSeconds + " seconds to arrive.");
-            DebugHandler.debugln("Waiting " + waitTimeSeconds + " seconds to arrive.");
+            DebugHandler.debugInfo("Waiting " + waitTimeSeconds + " seconds to arrive.");
             th.join();
             
             
             //Thread.sleep(1000 * waitTimeSeconds);
             
             System.out.println("Arrived!");
-            DebugHandler.debugln("Arrived!");
+            DebugHandler.debugInfo("Arrived!");
             
             currentLocation = newLoc;
             cw.newLocation(newLoc);
