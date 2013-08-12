@@ -4,3 +4,5 @@
 *.war
 *.ear
 *~
+locations
+authcookie
