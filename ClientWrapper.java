@@ -31,7 +31,8 @@ public class ClientWrapper{
     
     //Final connection strings for initializing a connection
     public final String baseURL = "https://m-dot-betaspike.appspot.com";
-    public final String nemesisDeviceID = "json=%7B%22nemesisSoftwareVersion%22%3A%222013-05-22T19%3A12%3A58Z+7a2d8c1d88b1+opt%22%2C%22deviceSoftwareVersion%22%3A%222.3.3%22%7D";
+    //public final String nemesisDeviceID = "json=%7B%22nemesisSoftwareVersion%22%3A%222013-05-22T19%3A12%3A58Z+7a2d8c1d88b1+opt%22%2C%22deviceSoftwareVersion%22%3A%222.3.3%22%7D";
+    public final String nemesisDeviceID = "json=%7B%22nemesisSoftwareVersion%22%3A%222013-07-29T18%3A57%3A27Z%207af0d9a744b7%20opt%22%2C%22deviceSoftwareVersion%22%3A%22v1.32.1%22%7D";
     public ClientWrapper(String authCookie, Player player){
         this.player = player;
         this.authCookie = authCookie;
