@@ -15,6 +15,7 @@ Quick Start Guide:
 * Copy the SACSID cookie into the "authcookie" file.  See the authcookie.example file
 * Start capturing packets for Ingress Intel page:  $ sudo tcpdump -i eth0 host www.ingress.com -s 65535 -w portals.pcap 
 * Log in to www.ingress.com/intel and surf around your city.  Zoom & pan and capture as many portals as you can
+* Install "tshark" command line app
 * Run:  $ utils/portal\_list.pl portals.pcap > locations  
 * See the --help and --man for the script for extra options
 * Install Oracle Java SDK
