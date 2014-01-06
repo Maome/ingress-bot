@@ -1,5 +1,7 @@
-``` This repository is no longer being actively maintained so I probably won't fix any issues
-but if you want to ask questions I'll do my best to answer them. ```
+```
+This repository is no longer being actively maintained so I probably won't fix any issues
+but if you want to ask questions I'll do my best to answer them.
+```
 
 Ingress Bot
 ===========
